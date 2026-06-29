@@ -1,0 +1,20 @@
+# Игнорируем все данные
+data/
+results/
+
+# Игнорируем виртуальное окружение
+env/
+venv/
+.env
+
+# Кэш Python и Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Специфичные тяжелые форматы (на всякий случай)
+*.fasta
+*.fas
+*.aln
+*.treefile
+*.pdb
