@@ -258,4 +258,73 @@ pLDDT          ☐
 Consensus IDR  ☐
 ```
 
-Следующий этап — реализовать аналогичные модули для IUPred, flDPnn и AlphaFold pLDDT, после чего перейти к построению консенсусной карты IDR для PHF10.
+# 2026-06-30
+
+## DONE
+
+### Orthology
+
+* Создан модуль `src/orthology/models.py`.
+
+* Определены структуры данных для ортологического анализа.
+
+* Реализован Ensembl orthology pipeline в `src/fetch/orthology.py`.
+
+* Настроено преобразование:
+
+  `UniProt (Q8WUB8) → Ensembl Gene → Ensembl Compara orthologs`
+
+* Получен первый набор ортологов PHF10 из Ensembl.
+
+* Экспортирован TSV-файл с ортологами.
+
+Результат:
+
+* 212 записей ортологии.
+* 211 уникальных белков.
+
+### FASTA export
+
+Создан модуль:
+
+`src/orthology/export_fasta.py`
+
+Реализовано:
+
+* чтение `ensembl.tsv`;
+* извлечение уникальных `target_protein_id`;
+* загрузка последовательностей через Ensembl REST API;
+* экспорт общего FASTA-файла.
+
+Результат:
+
+* получено 211 последовательностей;
+* сформирован файл:
+
+`data/raw/orthology/phf10_orthologs.fasta`
+
+Размер файла:
+
+* ~120 KB.
+
+## Коммиты
+
+Уже существует:
+
+`f27d599 - Add initial Ensembl orthology fetch pipeline`
+
+Подготовлен следующий этап:
+
+`Add ortholog FASTA export`
+
+## TODO
+
+Следующий модуль:
+
+`src/orthology/qc_fasta.py`
+
+Задачи:
+
+* подсчёт длин последовательностей;
+* поиск аномально коротких и длинных белков;
+* формирование таблицы статистик перед построением MSA.
