@@ -18,3 +18,10 @@ __pycache__/
 *.aln
 *.treefile
 *.pdb
+env_clean/
+env/
+env_clean/
+__pycache__/
+*.pyc
+data/raw/
+env/
