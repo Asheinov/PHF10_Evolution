@@ -1,0 +1,17 @@
+clade_order	clade_id	clade_name	priority	expected_species	observed_species	missing_species	expected_species_count	observed_species_count	missing_species_count	total_records	tree_ok_records	nterm_ok_records	ptm_ok_records	nterm_truncated_records	ptm_not_ready_records	gap_status	why_needed
+1	urochordata	Urochordata / tunicates	OUTGROUP	ciona_intestinalis;ciona_savignyi	ciona_intestinalis;ciona_savignyi		2	2	0	2	2	1	1	0	0	PRESENT_STRONG	outgroup for vertebrate comparison
+2	cyclostomata_hagfish	Cyclostomata / hagfish	CRITICAL	eptatretus_burgeri	eptatretus_burgeri		1	1	0	1	1	0	0	0	0	PRESENT_TREE_ONLY	jawless vertebrate currently present
+3	cyclostomata_lamprey	Cyclostomata / lampreys	CRITICAL	petromyzon_marinus;lethenteron_camtschaticum;entosphenus_tridentatus		petromyzon_marinus;lethenteron_camtschaticum;entosphenus_tridentatus	3	0	3	0	0	0	0	0	0	MISSING_CRITICAL	critical missing branch between hagfish and jawed vertebrates
+4	chondrichthyes_holocephali	Chondrichthyes / holocephali	CRITICAL	callorhinchus_milii	callorhinchus_milii		1	1	0	1	1	1	1	0	0	PRESENT_STRONG	earliest current confident jawed vertebrate branch
+5	chondrichthyes_elasmobranchii	Chondrichthyes / sharks and rays	HIGH	scyliorhinus_canicula;leucoraja_erinacea;rhincodon_typus		scyliorhinus_canicula;leucoraja_erinacea;rhincodon_typus	3	0	3	0	0	0	0	0	0	MISSING	test whether cartilaginous fish signal is broader than Callorhinchus
+6	sarcopterygii_coelacanth	Sarcopterygii / coelacanth	HIGH	latimeria_chalumnae	latimeria_chalumnae		1	1	0	1	1	0	0	0	0	PRESENT_TREE_ONLY	lobe-finned fish before tetrapods
+7	sarcopterygii_lungfish	Sarcopterygii / lungfish	HIGH	protopterus_annectens;neoceratodus_forsteri		protopterus_annectens;neoceratodus_forsteri	2	0	2	0	0	0	0	0	0	MISSING	critical sister region near tetrapod origin if available
+8	actinopterygii_gar	Holostei / gar	HIGH	lepisosteus_oculatus	lepisosteus_oculatus		1	1	0	1	1	1	1	0	0	PRESENT_STRONG	basal ray-finned fish
+9	teleostei_basal	Teleostei / early teleosts	MEDIUM	clupea_harengus;esox_lucius	clupea_harengus;esox_lucius		2	2	0	2	2	2	2	0	0	PRESENT_STRONG	early teleost sampling
+10	teleostei_model	Teleostei / model fish	MEDIUM	danio_rerio;oryzias_latipes;gasterosteus_aculeatus	danio_rerio;oryzias_latipes;gasterosteus_aculeatus		3	3	0	3	3	3	3	0	0	PRESENT_STRONG	teleost model species
+11	amphibia	Amphibia	HIGH	xenopus_tropicalis;leptobrachium_leishanense	xenopus_tropicalis;leptobrachium_leishanense		2	2	0	2	2	1	1	0	0	PRESENT_STRONG	test tetrapod-side conservation and divergence
+12	sauropsida_reptiles	Reptiles	HIGH	anolis_carolinensis;podarcis_muralis;crocodylus_porosus	anolis_carolinensis;podarcis_muralis;crocodylus_porosus		3	3	0	3	3	2	2	0	0	PRESENT_STRONG	non-avian sauropsids
+13	sauropsida_birds	Birds	MEDIUM	gallus_gallus;taeniopygia_guttata;struthio_camelus_australis	gallus_gallus;taeniopygia_guttata;struthio_camelus_australis		3	3	0	3	3	2	2	0	0	PRESENT_STRONG	bird branch
+14	mammalia_monotreme	Monotremata	HIGH	ornithorhynchus_anatinus	ornithorhynchus_anatinus		1	1	0	1	1	1	1	0	0	PRESENT_STRONG	early mammalian branch
+15	mammalia_marsupial	Marsupialia	MEDIUM	monodelphis_domestica;sarcophilus_harrisii	monodelphis_domestica;sarcophilus_harrisii		2	2	0	2	2	2	2	0	0	PRESENT_STRONG	viviparity/mammalian branch comparison
+16	mammalia_placental	Placentalia	MEDIUM	homo_sapiens;mus_musculus;bos_taurus;canis_lupus_familiaris	homo_sapiens;mus_musculus;bos_taurus;canis_lupus_familiaris		4	4	0	4	4	4	4	0	0	PRESENT_STRONG	placental reference diversity

@@ -1,0 +1,44 @@
+{
+  "queries": [
+    {
+      "ok": true,
+      "query_species": "homo_sapiens",
+      "query_symbol": "PHF10",
+      "response": {
+        "data": [
+          {
+            "homologies": [],
+            "id": "ENSG00000130024"
+          }
+        ]
+      },
+      "source": "Ensembl",
+      "target_species": "petromyzon_marinus",
+      "url": "https://rest.ensembl.org/homology/symbol/homo_sapiens/PHF10?type=orthologues&target_species=petromyzon_marinus&content-type=application%2Fjson"
+    },
+    {
+      "error": "Ensembl request failed: status=400 url=https://rest.ensembl.org/homology/symbol/homo_sapiens/PHF10?type=orthologues&target_species=lethenteron_camtschaticum&content-type=application%2Fjson context={\"error\":\"Can not find internal name for species 'lethenteron_camtschaticum'\"}",
+      "ok": false,
+      "query_species": "homo_sapiens",
+      "query_symbol": "PHF10",
+      "source": "Ensembl",
+      "target_species": "lethenteron_camtschaticum",
+      "url": "https://rest.ensembl.org/homology/symbol/homo_sapiens/PHF10?type=orthologues&target_species=lethenteron_camtschaticum&content-type=application%2Fjson"
+    },
+    {
+      "error": "Ensembl request failed: status=400 url=https://rest.ensembl.org/homology/symbol/homo_sapiens/PHF10?type=orthologues&target_species=entosphenus_tridentatus&content-type=application%2Fjson context={\"error\":\"Can not find internal name for species 'entosphenus_tridentatus'\"}",
+      "ok": false,
+      "query_species": "homo_sapiens",
+      "query_symbol": "PHF10",
+      "source": "Ensembl",
+      "target_species": "entosphenus_tridentatus",
+      "url": "https://rest.ensembl.org/homology/symbol/homo_sapiens/PHF10?type=orthologues&target_species=entosphenus_tridentatus&content-type=application%2Fjson"
+    }
+  ],
+  "query": {
+    "homology_type": "orthologues",
+    "query_species": "homo_sapiens",
+    "query_symbol": "PHF10",
+    "source": "Ensembl"
+  }
+}

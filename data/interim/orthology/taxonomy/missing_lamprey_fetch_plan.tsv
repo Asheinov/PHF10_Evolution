@@ -1,0 +1,4 @@
+species	taxon_group	priority	gap_status_from_taxonomic_qc	preferred_sources	search_stage	fetch_status	why_needed	manual_note
+petromyzon_marinus	lamprey	CRITICAL	MISSING_CRITICAL	Ensembl;NCBI RefSeq;UniProt;OrthoDB	TARGET_DEFINED	NOT_FETCHED	critical cyclostome branch missing from current PHF10 dataset	Do not search by KRRRMGS; identify PHF10 candidates independently
+lethenteron_camtschaticum	lamprey	CRITICAL	MISSING_CRITICAL	NCBI RefSeq;UniProt;OrthoDB	TARGET_DEFINED	NOT_FETCHED	critical cyclostome branch missing from current PHF10 dataset	Do not search by KRRRMGS; identify PHF10 candidates independently
+entosphenus_tridentatus	lamprey	CRITICAL	MISSING_CRITICAL	NCBI RefSeq;UniProt;OrthoDB	TARGET_DEFINED	NOT_FETCHED	critical cyclostome branch missing from current PHF10 dataset	Do not search by KRRRMGS; identify PHF10 candidates independently

@@ -1,0 +1,4 @@
+source	query_species	query_symbol	target_species	candidate_gene_id	candidate_protein_id	candidate_transcript_id	candidate_symbol	homology_type	orthology_confidence	perc_id	perc_pos	protein_sequence_available	sequence_fetch_status	raw_record_index	manual_review_status	manual_note
+Ensembl	homo_sapiens	PHF10	petromyzon_marinus									False	NOT_FETCHED		NO_METADATA_CANDIDATE	
+Ensembl	homo_sapiens	PHF10	lethenteron_camtschaticum									False	NOT_FETCHED		NO_METADATA_CANDIDATE	No Ensembl metadata candidate returned; inspect raw JSON.
+Ensembl	homo_sapiens	PHF10	entosphenus_tridentatus									False	NOT_FETCHED		NO_METADATA_CANDIDATE	No Ensembl metadata candidate returned; inspect raw JSON.
