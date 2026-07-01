@@ -33,28 +33,72 @@ from src.orthology.models import OrthologHit
 # 1. ID MAPPING
 # ------------------------------------------------------------
 
+def get_json(url: str, timeout: int = 30) -> dict:
+    """
+    Fetch JSON from a REST endpoint with bounded network behavior.
+    """
+
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+    }
+
+    try:
+        response = requests.get(url, headers=headers, timeout=timeout)
+    except requests.exceptions.RequestException as exc:
+        raise RuntimeError(f"Request failed for URL {url}: {exc}") from exc
+
+    if not response.ok:
+        context = response.text[:300].replace("\n", " ")
+        raise RuntimeError(
+            f"Request failed for URL {url}: "
+            f"status={response.status_code}, response={context}"
+        )
+
+    try:
+        return response.json()
+    except ValueError as exc:
+        context = response.text[:300].replace("\n", " ")
+        raise RuntimeError(
+            f"Failed to parse JSON from URL {url}: "
+            f"status={response.status_code}, response={context}"
+        ) from exc
+
+
+def normalize_ensembl_species_name(species_name: str) -> str:
+    """
+    Convert display species names into Ensembl REST species identifiers.
+    """
+
+    return species_name.strip().lower().replace(" ", "_")
+
 def map_uniprot_to_ensembl_gene(uniprot_id: str) -> str:
     """
     UniProt → Ensembl Gene ID via UniProt cross-reference
     """
 
-    import requests
-
     url = f"https://rest.uniprot.org/uniprotkb/{uniprot_id}.json"
 
-    r = requests.get(url)
-
-    if not r.ok:
-        raise RuntimeError(f"Failed UniProt fetch: {uniprot_id}")
-
-    data = r.json()
+    data = get_json(url)
+    gene_ids = []
 
     for ref in data.get("uniProtKBCrossReferences", []):
         if ref.get("database") == "Ensembl":
 
             for prop in ref.get("properties", []):
                 if prop.get("key") == "GeneId":
-                    return prop.get("value")
+                    gene_id = prop.get("value")
+                    if gene_id and gene_id not in gene_ids:
+                        gene_ids.append(gene_id)
+
+    if len(gene_ids) == 1:
+        return gene_ids[0]
+
+    if len(gene_ids) > 1:
+        raise RuntimeError(
+            f"Ambiguous Ensembl Gene IDs for UniProt {uniprot_id}: "
+            f"{', '.join(gene_ids)}"
+        )
 
     raise RuntimeError(f"No Ensembl Gene ID found for {uniprot_id}")
 
@@ -63,32 +107,19 @@ def map_uniprot_to_ensembl_gene(uniprot_id: str) -> str:
 # 2. FETCH LAYERS (stubs for now)
 # ------------------------------------------------------------
 
-def fetch_ensembl_orthologs(ensembl_gene_id: str):
-
-    import requests
-
-    headers = {"Content-Type": "application/json"}
+def fetch_ensembl_orthologs(
+    ensembl_gene_id: str,
+    query_species: str
+) -> List[Dict[str, Any]]:
 
     clean_id = ensembl_gene_id.split(".")[0]
 
-    species = "homo_sapiens"
-
     url = (
         f"https://rest.ensembl.org/homology/id/"
-        f"{species}/{clean_id}?type=orthologues"
+        f"{query_species}/{clean_id}?type=orthologues"
     )
 
-    # print("REQUEST URL:", url)
-
-    r = requests.get(url, headers=headers)
-
-    # print("STATUS:", r.status_code)
-    # print("RESPONSE SAMPLE:", r.text[:300])
-
-    if not r.ok:
-        raise RuntimeError(f"Ensembl fetch failed for {clean_id}")
-
-    data = r.json()
+    data = get_json(url)
 
     results = []
 
@@ -228,20 +259,28 @@ def run_orthology_fetch(
     ensembl_gene_id = map_uniprot_to_ensembl_gene(input_uniprot)
 
     query_species = config.get("query_species", "Homo sapiens")
+    ensembl_query_species = normalize_ensembl_species_name(query_species)
     query_gene = config.get("query_gene", "UNKNOWN")
     query_protein_id = input_uniprot
 
     out_dir = config.get("output_dir", "data/raw/orthology")
+    use_ensembl = config.get("use_ensembl", True)
+    use_oma = config.get("use_oma", False)
+    use_orthodb = config.get("use_orthodb", False)
 
     # --------------------------------------------------------
     # 2. Fetch raw data
     # --------------------------------------------------------
 
-    ensembl_raw = fetch_ensembl_orthologs(ensembl_gene_id)
-    #oma_raw = fetch_oma_orthologs(ensembl_gene_id)
-    #orthodb_raw = fetch_orthodb_orthologs(ensembl_gene_id)
-    oma_raw = []
-    orthodb_raw = []
+    ensembl_raw = (
+        fetch_ensembl_orthologs(ensembl_gene_id, ensembl_query_species)
+        if use_ensembl
+        else []
+    )
+    oma_raw = fetch_oma_orthologs(ensembl_gene_id) if use_oma else []
+    orthodb_raw = (
+        fetch_orthodb_orthologs(ensembl_gene_id) if use_orthodb else []
+    )
     # --------------------------------------------------------
     # 3. Normalize
     # --------------------------------------------------------
@@ -283,7 +322,11 @@ if __name__ == "__main__":
     config = {
         "query_gene": "PHF10",
         "query_species": "Homo sapiens",
-        "output_dir": "data/raw/orthology"
+        "output_dir": "data/raw/orthology",
+        "use_ensembl": True,
+        "use_oma": False,
+        "use_orthodb": False,
     }
 
     run_orthology_fetch("Q8WUB8", config)
+    
