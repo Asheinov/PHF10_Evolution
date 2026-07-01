@@ -1,0 +1,58 @@
+PHF10 strict MSA alignment QC
+QC only: no filtering or biological interpretation.
+
+number of sequences: 198
+alignment length: 1353
+min gap_fraction: 0.507021
+max gap_fraction: 0.831486
+mean gap_fraction: 0.640343
+min internal_gap_fraction: 0.148559
+max internal_gap_fraction: 0.537324
+mean internal_gap_fraction: 0.320616
+records where non_gap_length != raw_length: 0
+
+Top 20 sequences by gap_fraction:
+protein_id species raw_length aligned_length gap_fraction internal_gap_fraction
+ENSOPRP00000005965 ochotona_princeps 228 1353 0.831486 0.148559
+ENSMLUP00000022781 myotis_lucifugus 285 1353 0.789357 0.248337
+ENSMLUP00000021833 myotis_lucifugus 288 1353 0.787140 0.249076
+ENSMICP00000034045 microcebus_murinus 347 1353 0.743533 0.266075
+ENSMEUP00000007500 notamacropus_eugenii 354 1353 0.738359 0.212860
+ENSPVAP00000011530 pteropus_vampyrus 369 1353 0.727273 0.272727
+ENSHGLP00000004465 heterocephalus_glaber_female 396 1353 0.707317 0.178862
+ENSTNIP00000020834 tetraodon_nigroviridis 399 1353 0.705100 0.250554
+ENSAPEP00000008017 amphiprion_percula 400 1353 0.704361 0.252772
+ENSXCOP00000016091 xiphophorus_couchianus 403 1353 0.702143 0.250554
+ENSHBUP00000016365 haplochromis_burtoni 408 1353 0.698448 0.246859
+ENSNBRP00000005187 neolamprologus_brichardi 408 1353 0.698448 0.246859
+ENSPNYP00000022158 pundamilia_nyererei 408 1353 0.698448 0.246859
+ENSSARP00000000294 sorex_araneus 408 1353 0.698448 0.243902
+ENSTTRP00000010471 tursiops_truncatus 409 1353 0.697709 0.242424
+ENSCATP00000037986 cercocebus_atys 410 1353 0.696970 0.242424
+ENSEEUP00000012614 erinaceus_europaeus 410 1353 0.696970 0.242424
+ENSETEP00000008412 echinops_telfairi 410 1353 0.696970 0.242424
+ENSMPUP00000006966 mustela_putorius_furo 410 1353 0.696970 0.242424
+ENSPCAP00000001793 procavia_capensis 411 1353 0.696231 0.241685
+
+Top 20 sequences by internal_gap_fraction:
+protein_id species raw_length aligned_length gap_fraction internal_gap_fraction
+ENSCHAP00020016659 clupea_harengus 497 1353 0.632668 0.537324
+ENSCMIP00000006497 callorhinchus_milii 497 1353 0.632668 0.534368
+ENSMODP00000007051 monodelphis_domestica 500 1353 0.630451 0.532151
+ENSSSAP00000094135 salmo_salar 504 1353 0.627494 0.532151
+ENSLLEP00000035510 leptobrachium_leishanense 504 1353 0.627494 0.529194
+ENSRNOP00000020889 rattus_norvegicus 520 1353 0.615669 0.517369
+ENSOJAP00000046323 oryzias_javanicus 532 1353 0.606800 0.511456
+ENSCINP00000002239 ciona_intestinalis 667 1353 0.507021 0.507021
+ENSXETP00000076564 xenopus_tropicalis 541 1353 0.600148 0.501848
+ENSCCRP00000071382 cyprinus_carpio_carpio 502 1353 0.628973 0.498152
+ENSCARP00000127898 carassius_auratus 511 1353 0.622321 0.492239
+ENSSTUP00000090022 salmo_trutta 548 1353 0.594974 0.492239
+ENSSVLP00005012587 sciurus_vulgaris 560 1353 0.586105 0.487805
+ENSCJAP00000055296 callithrix_jacchus 562 1353 0.584627 0.486327
+ENSBIXP00005006750 bos_indicus_hybrid 563 1353 0.583888 0.485588
+ENSBTAP00000005130 bos_taurus 563 1353 0.583888 0.485588
+ENSMMUP00000020115 macaca_mulatta 563 1353 0.583888 0.485588
+ENSPMRP00000007603 podarcis_muralis 543 1353 0.598670 0.485588
+ENSBMSP00010013069 balaenoptera_musculus 564 1353 0.583149 0.484848
+ENSGMOP00000052857 gadus_morhua 564 1353 0.583149 0.483370
