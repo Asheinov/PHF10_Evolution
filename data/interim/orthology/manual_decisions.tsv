@@ -1,0 +1,14 @@
+protein_id	manual_status	manual_note
+F33E11.6b.1	EXCLUDE	EXTENDED singleton; 6756 aa; no Pfam domains detected; exclude from first MSA
+FBpp0306394	REVIEW	EXTENDED singleton; 2012 aa; PHD and INI1_DNA-bd hits present; keep for separate domain-anchored review
+ENSVPAP00000010060	REVIEW	CORE protein; 389 aa; no Pfam domains detected
+ENSCHOP00000001392	REVIEW	CORE short protein; 405 aa; INI1_DNA-bd only; no PHD-like hit
+ENSOPRP00000011148	REVIEW	CORE short protein; 283 aa; INI1_DNA-bd only; no PHD-like hit
+ENSBGRP00000013190	REVIEW	CORE long protein; 843 aa; INI1_DNA-bd only; no PHD-like hit
+ENSCHYP00000027050	REVIEW	CORE short protein; 309 aa; no PHD-like hit; non-PHF10-like domain profile
+ENSABRP00000022955	REVIEW	CORE protein; 514 aa; INI1_DNA-bd/DUF only; no PHD-like hit
+ENSGFOP00000017565	REVIEW	CORE protein; 492 aa; INI1_DNA-bd/DUF/Tctex-1 only; no PHD-like hit
+ENSECRP00000005700	REVIEW	CORE short protein; 271 aa; no PHD-like hit; WHD_GDS1 only
+ENSCABP00000011512	REVIEW	CORE short protein; 382 aa; INI1_DNA-bd/DUF only; no PHD-like hit
+ENSACCP00020007916	REVIEW	CORE short protein; 331 aa; no PHD-like hit
+ENSSHBP00005025105	REVIEW	CORE short protein; 371 aa; INI1_DNA-bd/DUF only; no PHD-like hit
