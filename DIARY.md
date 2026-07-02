@@ -663,7 +663,9 @@ Alignment QC:
 
 Визуализировать качество выравнивания, затем оценить необходимость trimming и только после этого переходить к построению филогенетического дерева.
 
-#orthology
+#
+
+orthology
 #qc
 #msa
 #alignment_qc
@@ -724,3 +726,152 @@ Alignment QC:
 * отдельные readiness-статусы для дерева, N-конца и PTM-анализа.
 
 Модуль не должен переопределять ортологию, фильтровать последовательности или использовать Ser-rich мотив, N-terminal extension или фосфосайты как критерии ортологии.
+
+
+#orthology
+#msa
+#reference
+#sequence_readiness
+#nterm
+#ptm
+#qc
+#reproducibility
+#decision
+#done
+
+Завершён переход от technical strict MSA к reference-aware sequence readiness QC.
+
+Первичный `msa_input_strict` остаётся технически строгим набором из 198 ортологов, но не считается финальным biological/PTM-ready dataset.
+
+Поскольку в strict MSA отсутствовала Homo sapiens PHF10 sequence, координатный QC N-конца и PTM-окна был невозможен. Для решения этой проблемы добавлена человеческая reference sequence Q8WUB8 как отдельная запись `REFERENCE`, а не как ортолог.
+
+Создан новый MSA input:
+
+* 198 ортологов;
+* 1 Homo sapiens PHF10 reference;
+* всего 199 записей.
+
+Реализован и запущен MAFFT для набора с reference sequence.
+
+Результат:
+
+* input records: 199;
+* output records: 199;
+* MAFFT version: v7.490;
+* exit code: 0.
+
+После этого обновлён и успешно запущен `sequence_readiness_qc.py`.
+
+Результаты sequence/readiness QC:
+
+* total records: 199;
+* reference records: 1;
+* non-reference records: 198;
+* species: 186;
+* NTERM_TRUNCATED: 22;
+* PTM_NOT_READY: 22.
+
+Эти статусы не являются доказательством эволюционной потери N-конца или фосфо-кластера. Они означают только, что соответствующие последовательности непригодны для N-terminal/PTM анализа без дополнительной проверки.
+
+Выявлены множественные записи для 12 видов. Это требует отдельного анализа, так как такие случаи могут отражать изоформы, паралоги, WGD-дупликации у рыб или ошибки Ensembl Compara.
+
+Также выявлены записи с X-символами в N-terminal/PTM окне. Такие последовательности могут быть пригодны для дерева, но требуют REVIEW перед точным motif/PTM анализом.
+
+Принято рабочее разделение будущих наборов:
+
+* tree-ready dataset;
+* N-terminal-ready dataset;
+* PTM-ready dataset.
+
+Следующий этап:
+
+#readiness_visualization
+
+Построить первые readiness plots:
+
+* N-terminal coverage plot;
+* PTM-readiness plot;
+* species duplication plot;
+* X-in-window plot.
+
+После визуализации определить правила формирования task-specific FASTA-наборов.
+#orthology
+#qc
+#duplicates
+#sequence_readiness
+#msa
+#reproducibility
+#done
+
+Завершён QC множественных записей на один вид.
+
+Реализован модуль `duplicate_species_qc.py`, который анализирует виды с несколькими PHF10 candidate records на основе reference-aware sequence readiness QC table.
+
+Модуль не фильтрует последовательности, не переопределяет ортологию и не использует признаки IDR, Ser-rich области, N-концевого удлинения, доменов или PTM-мотивов.
+
+Результаты:
+- non-reference records: 198;
+- duplicated species: 12;
+- записей в duplicated species: 25;
+- SAME_GENE_MULTIPLE_PROTEINS: 0 видов;
+- DIFFERENT_GENES_SAME_SPECIES: 12 видов;
+- MISSING_GENE_ID_REVIEW: 0 видов.
+
+Вывод QC: множественные записи на один вид в текущем наборе не выглядят как простые изоформы одного гена. Все случаи связаны с разными gene_id внутри одного вида.
+
+Эти записи требуют отдельного решения перед формированием tree-ready dataset. Возможные объяснения включают паралогию, WGD/co-orthology у рыб, ошибки Ensembl Compara или разные gene predictions.
+
+Следующий этап:
+
+#duplicate_resolution
+
+Создать отдельную таблицу ручных решений для duplicated species cases, не удаляя последовательности автоматически.
+
+
+#orthology
+#nterm_form
+#s50
+#ptm_context
+#sequence_qc
+#isoforms
+#done
+
+Завершён слой N-terminal form QC для reference-aware PHF10 alignment.
+
+Добавлен модуль `src/orthology/nterm_form_qc.py`.
+
+Модуль аннотирует архитектуру N-конца относительно human PHF10 reference Q8WUB8, но не фильтрует записи, не переопределяет ортологию, не делает выводов о gain/loss и не классифицирует записи как подтверждённые биологические изоформы.
+
+Новый QC-слой разделяет несколько разных ситуаций, которые раньше могли смешиваться как “короткие формы”:
+
+* `FULL_NTERM_EXTENSION` — long-like candidates с upstream N-terminal extension и покрытием phospho-cluster;
+* `MGS_START_FORM` — short-form-like architecture: phospho-cluster и S50-equivalent присутствуют, но upstream N-terminal context отсутствует;
+* `DOWNSTREAM_START_FORM` — likely truncated/downstream-start models, у которых phospho-cluster и S50 отсутствуют, но downstream anchor покрыт;
+* fragment-like / problematic cases — S50 gap и плохое покрытие N-terminal/downstream regions;
+* `S50_SUBSTITUTED` — отдельный PTM-context review class.
+
+Результаты запуска:
+
+* total records: 199;
+* reference records: 1;
+* non-reference records: 198;
+* `FULL_NTERM_EXTENSION`: 135;
+* `MGS_START_FORM`: 12;
+* `DOWNSTREAM_START_FORM`: 17;
+* `S50_PRESENT`: 173;
+* `S50_GAP`: 23;
+* `S50_SUBSTITUTED`: 3.
+
+Ключевое методологическое уточнение:
+
+`PHOSPHO_CLUSTER_PRESENT` не равен `PTM_FUNCTIONAL_READY`.
+
+Это связано с экспериментальным контекстом PHF10: human short isoforms начинаются около MGS и содержат phospho-cluster, но в экспериментах не демонстрируют N-terminal phosphorylation. Кроме того, S50A приводит к почти полной элиминации N-terminal phosphorylation, поэтому S50-equivalent status должен рассматриваться отдельно.
+
+Осторожный вывод:
+
+В Ensembl-derived PHF10 candidate set есть не один тип “короткой” N-terminal architecture, а минимум несколько разных классов. `MGS_START_FORM` может быть short-form-like architecture, но не является автоматическим доказательством биологической short isoform. `DOWNSTREAM_START_FORM` и fragment-like записи не являются evidence эволюционной потери N-terminal phospho-module; они требуют проверки transcript/genome/protein annotation и не должны использоваться для N-terminal/PTM analysis без дополнительного QC.
+
+Следующий шаг:
+
+Создать маленький export-модуль `export_nterm_form_alignment_sets.py`, который экспортирует aligned FASTA subsets по классам `nterm_form_qc` для ручного просмотра в AliView/Jalview.
